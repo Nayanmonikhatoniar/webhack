@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CatastropheIndex.AI - Real-Time Catastrophic Risk Intelligence</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0a0a0a;
+            color: #e5e5e5;
+        }
+        .glass-card {
+            background: rgba(23, 23, 23, 0.6);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        .hero-gradient {
+            background: radial-gradient(ellipse at top, rgba(192, 38, 211, 0.1), transparent 60%),
+                        radial-gradient(ellipse at bottom right, rgba(219, 39, 119, 0.1), transparent 70%);
+        }
+        .btn-primary {
+            @apply px-6 py-3 font-bold text-white bg-fuchsia-600 rounded-lg hover:bg-fuchsia-700 transition-all duration-300 shadow-lg shadow-fuchsia-600/20 transform hover:scale-105;
+        }
+        .btn-secondary {
+            @apply px-6 py-3 font-bold text-white bg-gray-700 rounded-lg hover:bg-gray-600 transition-all duration-300 transform hover:scale-105;
+        }
+        .btn-outline {
+             @apply px-6 py-3 font-bold text-fuchsia-400 bg-transparent border-2 border-fuchsia-400 rounded-lg hover:bg-fuchsia-400 hover:text-white transition-all duration-300 transform hover:scale-105;
+        }
+        .section-title {
+            @apply text-4xl md:text-5xl font-extrabold text-center mb-2 text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-500 to-pink-500;
+        }
+        .section-subtitle {
+            @apply text-center text-lg text-gray-400 mb-12 max-w-3xl mx-auto;
+        }
+        .input-field {
+            @apply w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:ring-2 focus:ring-fuchsia-500 focus:outline-none transition-all;
+        }
+        .content-reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
+        .content-reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .faq-item .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out, padding 0.5s ease-in-out;
+        }
+        .faq-item.open .faq-answer {
+            max-height: 200px; /* Adjust as needed */
+        }
+        .faq-item.open .faq-arrow {
+            transform: rotate(180deg);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header -->
+    <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 glass-card">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-white">
+                CatastropheIndex<span class="text-fuchsia-500">.AI</span>
+            </a>
+            <nav class="hidden md:flex space-x-8 items-center">
+                <a href="#home" class="text-gray-300 hover:text-fuchsia-400 transition">Home</a>
+                <a href="#features" class="text-gray-300 hover:text-fuchsia-400 transition">Features</a>
+                <a href="#simulator" class="text-gray-300 hover:text-fuchsia-400 transition">Simulator</a>
+                <a href="#pricing" class="text-gray-300 hover:text-fuchsia-400 transition">Pricing</a>
+                <a href="#faq" class="text-gray-300 hover:text-fuchsia-400 transition">FAQ</a>
+                <a href="#about" class="text-gray-300 hover:text-fuchsia-400 transition">About</a>
+            </nav>
+            <a href="#pricing" class="hidden md:inline-block btn-primary text-sm px-5 py-2">Get Started</a>
+            <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
+            <a href="#home" class="block py-2 text-gray-300 hover:text-fuchsia-400">Home</a>
+            <a href="#features" class="block py-2 text-gray-300 hover:text-fuchsia-400">Features</a>
+            <a href="#simulator" class="block py-2 text-gray-300 hover:text-fuchsia-400">Simulator</a>
+            <a href="#pricing" class="block py-2 text-gray-300 hover:text-fuchsia-400">Pricing</a>
+            <a href="#faq" class="block py-2 text-gray-300 hover:text-fuchsia-400">FAQ</a>
+            <a href="#about" class="block py-2 text-gray-300 hover:text-fuchsia-400">About</a>
+            <a href="#pricing" class="block mt-2 btn-primary text-center">Get Started</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="min-h-screen flex items-center pt-24 md:pt-0 hero-gradient">
+            <div class="container mx-auto px-6 text-center">
+                <div class="max-w-4xl mx-auto">
+                    <h1 class="text-5xl md:text-7xl font-black text-white leading-tight mb-6">
+                        Predicting Tomorrow's Disasters,
+                        <span class="bg-clip-text text-transparent bg-gradient-to-r from-fuchsia-500 to-pink-500">Today.</span>
+                    </h1>
+                    <p class="text-lg md:text-xl text-gray-300 mb-10">
+                        CatastropheIndex.AI is a real-time risk intelligence platform using advanced AI, chemical engineering, and financial modeling to forecast and mitigate industrial catastrophes. Empowering communities, industries, and governments.
+                    </p>
+                    <div class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
+                        <a href="#check-risk" class="btn-primary w-full sm:w-auto">Check Your Local Risk</a>
+                        <a href="#simulator" class="btn-secondary w-full sm:w-auto">Run a Simulation</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="py-20">
+            <div class="container mx-auto px-6">
+                <h2 class="section-title">A Multi-Stakeholder Platform</h2>
+                <p class="section-subtitle">We provide tailored tools for every user, from concerned citizens to industrial managers and policymakers.</p>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Feature Cards... -->
+                    <div class="glass-card p-8 rounded-xl text-center hover:border-fuchsia-500/50 transform hover:-translate-y-2">
+                        <div class="text-fuchsia-400 mb-4"><svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg></div>
+                        <h3 class="text-xl font-bold mb-2 text-white">Location Risk Awareness</h3>
+                        <p class="text-gray-400">Instantly check the Catastrophe Index for any location and access safety protocols.</p>
+                    </div>
+                    <div class="glass-card p-8 rounded-xl text-center hover:border-fuchsia-500/50 transform hover:-translate-y-2">
+                        <div class="text-fuchsia-400 mb-4"><svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg></div>
+                        <h3 class="text-xl font-bold mb-2 text-white">Real-Time Anomaly Alerts</h3>
+                        <p class="text-gray-400">Our ML models monitor industrial data 24/7 to detect deviations and trigger early warnings.</p>
+                    </div>
+                    <div class="glass-card p-8 rounded-xl text-center hover:border-fuchsia-500/50 transform hover:-translate-y-2">
+                        <div class="text-fuchsia-400 mb-4"><svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg></div>
+                        <h3 class="text-xl font-bold mb-2 text-white">Interactive Simulations</h3>
+                        <p class="text-gray-400">Model "what-if" scenarios for toxic plumes, BLEVEs, and other hazards for training and planning.</p>
+                    </div>
+                    <div class="glass-card p-8 rounded-xl text-center hover:border-fuchsia-500/50 transform hover:-translate-y-2">
+                        <div class="text-fuchsia-400 mb-4"><svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg></div>
+                        <h3 class="text-xl font-bold mb-2 text-white">Financial Hedging</h3>
+                        <p class="text-gray-400">Utilize our Quant module to price catastrophe bonds and insure against financial losses.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Check Risk Section -->
+        <section id="check-risk" class="py-20 bg-gray-900/50">
+            <div class="container mx-auto px-6">
+                <h2 class="section-title">Check Your Local Risk</h2>
+                <p class="section-subtitle">Enter your address or use your current location to get a real-time Catastrophe Index score and view nearby industrial facilities.</p>
+                <div class="max-w-2xl mx-auto flex flex-col sm:flex-row gap-4 mb-8">
+                    <input type="text" id="location-input" placeholder="Enter your city, address, or postal code..." class="input-field flex-grow">
+                    <button id="check-risk-btn" class="btn-primary">Analyze Risk</button>
+                </div>
+                <div id="risk-result" class="content-reveal max-w-4xl mx-auto glass-card rounded-xl p-8">
+                    <!-- Dynamic content will be injected here -->
+                </div>
+            </div>
+        </section>
+        
+        <!-- Simulator Section -->
+        <section id="simulator" class="py-20 bg-gray-900/50">
+            <div class="container mx-auto px-6">
+                <h2 class="section-title">Disaster Propagation Simulator</h2>
+                <p class="section-subtitle">Experiment with "what-if" scenarios. Adjust parameters to see how a potential incident could unfold based on chemical properties and environmental conditions.</p>
+                <div class="max-w-7xl mx-auto grid lg:grid-cols-5 gap-8">
+                    <div class="lg:col-span-2 glass-card p-8 rounded-xl">
+                        <h3 class="text-2xl font-bold mb-6 text-white">Simulation Controls</h3>
+                        <!-- Controls... -->
+                        <div class="mb-6">
+                            <label for="chemical-select" class="block mb-2 font-medium text-gray-300">Hazardous Chemical</label>
+                            <select id="chemical-select" class="input-field">
+                                <option value="ammonia">Anhydrous Ammonia</option>
+                                <option value="chlorine">Chlorine Gas</option>
+                                <option value="propane">Propane (for BLEVE)</option>
+                                <option value="benzene">Benzene</option>
+                            </select>
+                        </div>
+                        <div class="mb-6">
+                            <label for="temp-slider" class="block mb-2 font-medium text-gray-300">Vessel Temperature (<span id="temp-value">80°C</span>)</label>
+                            <input type="range" id="temp-slider" min="20" max="200" value="80" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer">
+                        </div>
+                        <div class="mb-6">
+                            <label for="pressure-slider" class="block mb-2 font-medium text-gray-300">Internal Pressure (<span id="pressure-value">500 kPa</span>)</label>
+                            <input type="range" id="pressure-slider" min="100" max="2000" value="500" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer">
+                        </div>
+                        <div class="mb-4">
+                            <label for="wind-slider" class="block mb-2 font-medium text-gray-300">Wind Speed (<span id="wind-value">10 km/h</span>)</label>
+                            <input type="range" id="wind-slider" min="0" max="50" value="10" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer">
+                        </div>
+                         <button id="run-simulation-btn" class="w-full mt-6 btn-primary">Run Simulation</button>
+                    </div>
+                    <div class="lg:col-span-3 glass-card p-8 rounded-xl content-reveal" id="simulation-results-container">
+                        <div id="simulation-output">
+                            <div class="h-full flex flex-col justify-center items-center text-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 text-gray-600 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
+                                <h3 class="text-xl font-bold text-white">Simulation Results</h3>
+                                <p class="text-gray-400">Adjust controls and run simulation to see the potential impact.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pricing Section -->
+        <section id="pricing" class="py-20">
+            <!-- Content from previous version -->
+            <div class="container mx-auto px-6">
+                <h2 class="section-title">Flexible Plans for Every Need</h2>
+                <p class="section-subtitle">From individual citizens to large-scale enterprises, we have a plan that fits your risk management strategy.</p>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto items-center">
+                    <div class="glass-card p-8 rounded-xl h-full flex flex-col">
+                        <h3 class="text-2xl font-bold text-white">Community</h3>
+                        <p class="text-gray-400 mt-2 mb-6">For the general public, journalists, and activists.</p>
+                        <p class="text-5xl font-black text-white mb-2">₹0<span class="text-lg font-medium text-gray-400">/free</span></p>
+                        <ul class="space-y-4 text-gray-300 mb-8 flex-grow">
+                            <li class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Local Risk Score Check</li>
+                            <li class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Public Hazard Map Access</li>
+                            <li class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Basic Community Alerts</li>
+                        </ul>
+                        <a href="#check-risk" class="w-full text-center btn-secondary">Get Started</a>
+                    </div>
+                    <div class="glass-card p-8 rounded-xl border-2 border-fuchsia-500 transform md:scale-105 h-full flex flex-col shadow-2xl shadow-fuchsia-500/20">
+                         <p class="text-center font-bold text-fuchsia-400 mb-2">MOST POPULAR</p>
+                        <h3 class="text-3xl font-bold text-white">Professional</h3>
+                        <p class="text-gray-400 mt-2 mb-6">For plant managers, small businesses, and researchers.</p>
+                        <p class="text-5xl font-black text-white mb-2">₹15,000<span class="text-lg font-medium text-gray-400">/mo</span></p>
+                        <ul class="space-y-4 text-gray-300 mb-8 flex-grow">
+                            <li class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>All Community Features, plus:</li>
+                            <li class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Real-Time Anomaly Dashboard</li>
+                            <li class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Advanced Simulation Access</li>
+                            <li class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Catastrophe Bond Calculator</li>
+                             <li class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Priority Email Support</li>
+                        </ul>
+                        <a href="#" class="w-full text-center btn-primary">Choose Professional</a>
+                    </div>
+                    <div class="glass-card p-8 rounded-xl h-full flex flex-col">
+                        <h3 class="text-2xl font-bold text-white">Enterprise</h3>
+                        <p class="text-gray-400 mt-2 mb-6">For large industry, governments, and insurers.</p>
+                        <p class="text-5xl font-black text-white mb-2">Custom</p>
+                        <ul class="space-y-4 text-gray-300 mb-8 flex-grow">
+                            <li class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>All Professional Features, plus:</li>
+                            <li class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Full API Access</li>
+                            <li class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>On-Premise Deployment Options</li>
+                            <li class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Dedicated Support & Onboarding</li>
+                        </ul>
+                        <a href="#" class="w-full text-center btn-outline">Contact Sales</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq" class="py-20 bg-gray-900/50">
+            <div class="container mx-auto px-6">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+                <p class="section-subtitle">Have questions? We have answers. If you can't find what you're looking for, feel free to contact us.</p>
+                <div class="max-w-3xl mx-auto space-y-4">
+                    <!-- FAQ Item 1 -->
+                    <div class="faq-item glass-card rounded-lg">
+                        <button class="faq-question w-full flex justify-between items-center text-left text-xl font-semibold p-6">
+                            <span>How is the Catastrophe Index calculated?</span>
+                            <svg class="faq-arrow w-6 h-6 text-gray-400 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="faq-answer px-6 pb-6 text-gray-300">
+                            <p>The Index is a composite score derived from multiple data sources. It combines real-time sensor data (where available), historical incident records, chemical properties based on engineering models (toxicity, flammability), and machine learning predictions based on plant age, maintenance records, and geographical factors.</p>
+                        </div>
+                    </div>
+                    <!-- FAQ Item 2 -->
+                    <div class="faq-item glass-card rounded-lg">
+                        <button class="faq-question w-full flex justify-between items-center text-left text-xl font-semibold p-6">
+                            <span>Where does the data come from?</span>
+                            <svg class="faq-arrow w-6 h-6 text-gray-400 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="faq-answer px-6 pb-6 text-gray-300">
+                            <p>Our platform integrates data from public sources like the EPA (Environmental Protection Agency), academic research, open-source datasets, and partner with industrial clients who provide anonymized sensor data for more accurate, real-time monitoring under strict data privacy agreements.</p>
+                        </div>
+                    </div>
+                    <!-- FAQ Item 3 -->
+                    <div class="faq-item glass-card rounded-lg">
+                        <button class="faq-question w-full flex justify-between items-center text-left text-xl font-semibold p-6">
+                            <span>Is this service available in my country?</span>
+                            <svg class="faq-arrow w-6 h-6 text-gray-400 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="faq-answer px-6 pb-6 text-gray-300">
+                            <p>Currently, our most detailed models are focused on industrial zones in North America and Europe. However, the basic risk check feature uses global databases and is available worldwide. We are actively working on expanding our high-fidelity monitoring to more regions.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="py-20">
+            <!-- Content from previous version -->
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="section-title">About Us</h2>
+                <p class="section-subtitle">Our mission is to build a safer world by making catastrophic risk transparent, predictable, and manageable for everyone. We are a team of engineers, data scientists, and financial analysts dedicated to leveraging technology for societal good.</p>
+                <div class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
+                    <a href="#" class="btn-secondary w-full sm:w-auto">Meet the Team</a>
+                    <a href="#" class="btn-secondary w-full sm:w-auto">Read Our Research</a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 border-t border-gray-800">
+        <div class="container mx-auto px-6 py-12">
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="md:col-span-1">
+                    <h3 class="text-2xl font-bold text-white">CatastropheIndex<span class="text-fuchsia-500">.AI</span></h3>
+                    <p class="text-gray-400 mt-2">Predicting tomorrow's disasters, today.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold text-white">Stay Updated</h4>
+                    <p class="text-gray-400 mt-2">Join our newsletter for updates on our technology and new features.</p>
+                    <form id="newsletter-form" class="mt-4 flex flex-col sm:flex-row gap-2">
+                        <input type="email" id="newsletter-email" placeholder="your.email@example.com" class="input-field flex-grow" required>
+                        <button type="submit" class="btn-secondary">Subscribe</button>
+                    </form>
+                    <p id="newsletter-thanks" class="text-green-400 mt-2 hidden">Thank you for subscribing!</p>
+                </div>
+                <div>
+                     <h4 class="text-lg font-semibold text-white">Quick Links</h4>
+                     <ul class="mt-2 space-y-1 text-gray-400">
+                        <li><a href="#about" class="hover:text-fuchsia-400">About Us</a></li>
+                        <li><a href="#pricing" class="hover:text-fuchsia-400">Pricing</a></li>
+                        <li><a href="#faq" class="hover:text-fuchsia-400">FAQ</a></li>
+                        <li><a href="#" class="hover:text-fuchsia-400">Contact</a></li>
+                     </ul>
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-gray-800 text-center text-gray-500">
+                <p>&copy; 2024 CatastropheIndex.AI. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- General UI Enhancements ---
+            
+            // Mobile Menu Toggle
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // Header transparency on scroll
+            const header = document.getElementById('header');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    header.style.background = 'rgba(10, 10, 10, 0.7)';
+                } else {
+                    header.style.background = 'rgba(23, 23, 23, 0.6)';
+                }
+            });
+
+            // --- Check Risk Functionality ---
+            const checkRiskBtn = document.getElementById('check-risk-btn');
+            const locationInput = document.getElementById('location-input');
+            const riskResultDiv = document.getElementById('risk-result');
+            
+            // Simple hash function for pseudo-random but consistent results
+            const stringToHash = (str) => {
+                let hash = 0;
+                for (let i = 0; i < str.length; i++) {
+                    const char = str.charCodeAt(i);
+                    hash = ((hash << 5) - hash) + char;
+                    hash |= 0; // Convert to 32bit integer
+                }
+                return hash;
+            };
+
+            checkRiskBtn.addEventListener('click', () => {
+                const location = locationInput.value.trim();
+                if (!location) {
+                    riskResultDiv.innerHTML = `<p class="text-yellow-400 text-center">Please enter a location to analyze.</p>`;
+                    riskResultDiv.classList.add('visible');
+                    return;
+                }
+
+                riskResultDiv.classList.remove('visible');
+                riskResultDiv.innerHTML = `<div class="flex justify-center items-center gap-2 text-gray-300"><svg class="animate-spin h-5 w-5 text-fuchsia-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>Analyzing risk for ${location}...</div>`;
+                riskResultDiv.classList.add('visible');
+
+                setTimeout(() => {
+                    const hash = stringToHash(location.toLowerCase());
+                    const score = (Math.abs(hash) % 85) + 10; // Consistent score 10-94
+                    let riskLevel, colorClass, recommendations;
+
+                    if (score < 30) {
+                        riskLevel = 'Low'; colorClass = 'text-green-400';
+                        recommendations = 'Standard awareness protocols are sufficient. No immediate industrial threats detected.';
+                    } else if (score < 60) {
+                        riskLevel = 'Moderate'; colorClass = 'text-yellow-400';
+                        recommendations = 'Be aware of nearby industrial zones. Sign up for local community alerts. Have a basic emergency kit ready.';
+                    } else if (score < 85) {
+                        riskLevel = 'High'; colorClass = 'text-orange-400';
+                        recommendations = 'High probability of aging infrastructure or hazardous materials nearby. Know evacuation routes.';
+                    } else {
+                        riskLevel = 'Severe'; colorClass = 'text-red-500';
+                        recommendations = 'Immediate action recommended. Check local government alerts for specific instructions. Prepare for potential evacuation.';
+                    }
+
+                    riskResultDiv.innerHTML = `
+                        <div class="text-center mb-6"><h3 class="text-2xl font-bold text-white">Risk Analysis for: <span class="text-fuchsia-400">${location}</span></h3></div>
+                        <div class="grid md:grid-cols-2 gap-8 items-center">
+                            <div class="text-center"><p class="text-lg text-gray-400 mb-2">Catastrophe Index</p><p class="text-7xl font-black ${colorClass}">${score}</p><p class="text-2xl font-bold ${colorClass}">${riskLevel}</p></div>
+                            <div><h4 class="text-xl font-bold text-white mb-3">Recommendations:</h4><ul class="list-disc list-inside text-gray-300 space-y-2"><li>${recommendations}</li><li><strong>Nearest Monitored Facility:</strong> ${ (Math.abs(hash) % 2) === 0 ? 'Acme Chemical Corp.' : 'Global Petrochem'} (${(Math.abs(hash) % 5 + 1.5).toFixed(1)} km)</li><li><strong>Primary Hazard:</strong> Chlorine Gas Storage</li></ul></div>
+                        </div>`;
+                }, 1500);
+            });
+
+            // --- Simulator Functionality ---
+            const simControls = {
+                temp: document.getElementById('temp-slider'),
+                pressure: document.getElementById('pressure-slider'),
+                wind: document.getElementById('wind-slider'),
+            };
+            const simValues = {
+                temp: document.getElementById('temp-value'),
+                pressure: document.getElementById('pressure-value'),
+                wind: document.getElementById('wind-value'),
+            };
+            simControls.temp.addEventListener('input', () => simValues.temp.textContent = `${simControls.temp.value}°C`);
+            simControls.pressure.addEventListener('input', () => simValues.pressure.textContent = `${simControls.pressure.value} kPa`);
+            simControls.wind.addEventListener('input', () => simValues.wind.textContent = `${simControls.wind.value} km/h`);
+
+            const runSimBtn = document.getElementById('run-simulation-btn');
+            const simOutputContainer = document.getElementById('simulation-output');
+            const simResultsContainer = document.getElementById('simulation-results-container');
+            let impactChart = null;
+            let dispersionChart = null;
+
+            runSimBtn.addEventListener('click', () => {
+                const temp = parseInt(simControls.temp.value);
+                const pressure = parseInt(simControls.pressure.value);
+                const wind = parseInt(simControls.wind.value);
+                const chemical = document.getElementById('chemical-select').options[document.getElementById('chemical-select').selectedIndex].text;
+
+                const impactRadius = Math.round(50 * (temp / 20) * (pressure / 100) * 0.2);
+                const downwindDistance = Math.round(impactRadius * (1 + (wind / 10)) * 2);
+                
+                let scenario, impactColor;
+                if (impactRadius < 300) { scenario = 'Contained Incident'; impactColor = 'text-yellow-400'; } 
+                else if (impactRadius < 1000) { scenario = 'Significant Localized Event'; impactColor = 'text-orange-400'; } 
+                else { scenario = 'Major Catastrophic Release'; impactColor = 'text-red-500'; }
+                
+                simResultsContainer.classList.remove('visible');
+
+                setTimeout(() => {
+                    simOutputContainer.innerHTML = `
+                        <h4 class="text-xl font-bold text-white mb-4">Simulation Results: <span class="text-fuchsia-400">${chemical} Release</span></h4>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center mb-6">
+                            <div class="bg-gray-800 p-4 rounded-lg"><p class="text-sm text-gray-400">Scenario</p><p class="text-lg font-bold ${impactColor}">${scenario}</p></div>
+                            <div class="bg-gray-800 p-4 rounded-lg"><p class="text-sm text-gray-400">Primary Impact Radius</p><p class="text-2xl font-bold text-white">${impactRadius} m</p></div>
+                            <div class="bg-gray-800 p-4 rounded-lg"><p class="text-sm text-gray-400">Max Downwind Plume</p><p class="text-2xl font-bold text-white">${downwindDistance} m</p></div>
+                        </div>
+                        <div class="grid lg:grid-cols-2 gap-6">
+                            <div>
+                                <h5 class="font-bold text-center text-white mb-2">Impact Zones</h5>
+                                <div class="h-64"><canvas id="impactChart"></canvas></div>
+                            </div>
+                            <div>
+                                <h5 class="font-bold text-center text-white mb-2">Hazard Dispersion Model</h5>
+                                <div class="h-64"><canvas id="dispersionChart"></canvas></div>
+                            </div>
+                        </div>
+                    `;
+                    simResultsContainer.classList.add('visible');
+                    renderCharts(impactRadius, downwindDistance);
+                }, 300);
+            });
+
+            function renderCharts(impactRadius, downwindDistance) {
+                if(impactChart) impactChart.destroy();
+                if(dispersionChart) dispersionChart.destroy();
+
+                // Impact Zones Bar Chart
+                const impactCtx = document.getElementById('impactChart').getContext('2d');
+                impactChart = new Chart(impactCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Lethal', 'Injury', 'Evac.'],
+                        datasets: [{
+                            label: 'Impact Distance (m)',
+                            data: [impactRadius * 0.5, impactRadius, downwindDistance],
+                            backgroundColor: ['rgba(239, 68, 68, 0.6)', 'rgba(249, 115, 22, 0.6)', 'rgba(234, 179, 8, 0.6)'],
+                            borderColor: ['#ef4444', '#f97316', '#eab308'],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: { responsive: true, maintainAspectRatio: false, indexAxis: 'y', plugins: { legend: { display: false } }, scales: { x: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#d1d5db' } }, y: { grid: { display: false }, ticks: { color: '#d1d5db' } } } }
+                });
+
+                // Dispersion Line Chart
+                const dispersionCtx = document.getElementById('dispersionChart').getContext('2d');
+                const dispersionData = { labels: [], datasets: [{ label: 'Concentration (ppm)', data: [], borderColor: '#d946ef', backgroundColor: 'rgba(217, 70, 239, 0.2)', fill: true, tension: 0.4 }] };
+                for (let d = 0; d <= downwindDistance; d += Math.ceil(downwindDistance/10)) {
+                    dispersionData.labels.push(`${d}m`);
+                    const concentration = 1000 * Math.exp(- (d / (downwindDistance / 4)) );
+                    dispersionData.datasets[0].data.push(concentration > 1 ? concentration : 0);
+                }
+                dispersionChart = new Chart(dispersionCtx, {
+                    type: 'line',
+                    data: dispersionData,
+                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#d1d5db' } }, y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#d1d5db' } } } }
+                });
+            }
+
+            // --- FAQ Accordion ---
+            const faqItems = document.querySelectorAll('.faq-item');
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                question.addEventListener('click', () => {
+                    const wasOpen = item.classList.contains('open');
+                    faqItems.forEach(i => i.classList.remove('open'));
+                    if (!wasOpen) {
+                        item.classList.add('open');
+                    }
+                });
+            });
+            
+            // --- Newsletter Form ---
+            const newsletterForm = document.getElementById('newsletter-form');
+            const newsletterThanks = document.getElementById('newsletter-thanks');
+            newsletterForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                document.getElementById('newsletter-email').value = '';
+                newsletterThanks.classList.remove('hidden');
+                setTimeout(() => newsletterThanks.classList.add('hidden'), 3000);
+            });
+
+        });
+    </script>
+</body>
+</html>
+
